@@ -35,10 +35,6 @@ class CompanyController extends Controller
             'email' => $request['email'],
             'logo' => $logoPath,
         ]);
-        // Mail::send('emails.new_company',$company->toArray(),
-        // function($message){
-        //     $message->to('nahed581213@gmail.com','laravel_task')->subject('hi');
-        // });
         Mail::to('nahed581213@gmail.com')->send(new NewCompanyNotification($company));
         return redirect()->route('companies.index', $company->id)
                         ->with('success','Company created successfully');
@@ -55,9 +51,11 @@ class CompanyController extends Controller
     public function update(CompanyRequest $request, $id)
     {
         $logoPath = null;
+       
         if ($request->hasFile('logo')) {
             $logoPath = $request->file('logo')->store('public/logos');
             $logoPath = str_replace('public/', '/storage/', $logoPath);
+            // dd($logoPath);
         }
         $companyData = [
             'name' => $request->input('name'),

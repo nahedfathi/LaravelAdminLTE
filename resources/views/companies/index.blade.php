@@ -39,7 +39,7 @@
                                 <tr>
                                     <td>{{ $company->name }}</td>
                                     <td>{{ $company->email }}</td>
-                                    <td> <img src="{{ $company->logo }}"width="80ps" height="80px" alt=""></td>
+                                    <td> <img src="{{ $company->logo }}"width="80px" height="80px" alt=""></td>
                                     <td>{{ $company->website }}</td>
                                     <td>
                                     <div class="row">

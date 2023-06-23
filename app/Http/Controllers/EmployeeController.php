@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\EmployeeRequest;
 use App\Models\employee;
 use App\Models\company;
 class EmployeeController extends Controller
@@ -21,7 +22,7 @@ class EmployeeController extends Controller
         return view('employees.create', compact('companies'));
     }
 
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
         $employee = employee::create($request->all());
 
@@ -37,7 +38,7 @@ class EmployeeController extends Controller
         $companies = company::all();
         return view('employees.edit', ['employee' => $employee,'companies'=>$companies]);
     }
-    public function update(Request $request, $id)
+    public function update(EmployeeRequest $request, $id)
     {
         $employeeData = [
             'first_name' => $request->input('first_name'),
@@ -50,7 +51,7 @@ class EmployeeController extends Controller
         return redirect()->route('employees.index')->with('success', 'employee updated successfully.');
     }
 
-    public function delete(Request $request,$id)
+    public function delete($id)
     {
     $employee = employee::findOrFail($id);
     $employee->delete();
