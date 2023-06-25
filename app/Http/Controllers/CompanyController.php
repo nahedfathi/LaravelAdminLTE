@@ -23,11 +23,8 @@ class CompanyController extends Controller
 
     public function store(CompanyRequest $request)
     {
-        $logoPath = null;
-        if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('public/logos');
-            $logoPath = str_replace('public/', '/storage/', $logoPath);
-        }
+        $logoPath = time().'.'.$request->logo->extension(); 
+        $request->logo->move(public_path('images'), $logoPath);
 
         $company = company::create([
             'name' => $request['name'],
@@ -50,13 +47,8 @@ class CompanyController extends Controller
 
     public function update(CompanyRequest $request, $id)
     {
-        $logoPath = null;
-       
-        if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('public/logos');
-            $logoPath = str_replace('public/', '/storage/', $logoPath);
-            // dd($logoPath);
-        }
+        $logoPath = time().'.'.$request->logo->extension(); 
+        $request->logo->move(public_path('images'), $logoPath);
         $companyData = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
